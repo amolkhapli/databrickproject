@@ -102,3 +102,85 @@ near-real-time-banking-streaming-platform/
 └── docs/
 ├── interview_explanation.md
 └── assumptions_and_tradeoffs.md
+
+---
+
+## 🔄 End-to-End Data Flow
+
+1. Transaction events are published to Kafka
+2. Databricks Structured Streaming ingests data into Bronze Delta tables
+3. Bronze data is cleaned and deduplicated into Silver
+4. Silver feeds:
+   - Gold RT (streaming, SCD Type 1)
+   - Gold Regulatory (batch, SCD Type 2)
+5. Power BI consumes Gold layers for reporting
+
+---
+
+## ⏱️ Late Data Handling
+
+- Event-time processing using `transaction_ts`
+- Watermark of **10 minutes**
+- Prevents unbounded state growth
+- Late data beyond watermark can be recovered via Bronze replay
+
+---
+
+## 🔐 Security & Governance (Conceptual)
+
+- Role-based access per layer
+- Masking of PII for operational users
+- Restricted access to regulatory data
+- Clear data lineage from source to consumption
+
+---
+
+## 🚨 Failure & Recovery Strategy
+
+- Kafka provides durable event storage
+- Checkpointing ensures exactly-once processing
+- Bronze layer enables full replay
+- Regulatory reprocessing does not impact operational dashboards
+
+---
+
+## 🛠️ Technologies Used
+
+- Apache Kafka
+- Azure Databricks (Structured Streaming)
+- PySpark
+- Delta Lake
+- Azure Data Lake Gen2 (simulated via DBFS)
+- Power BI
+
+---
+
+## ▶️ How to Run (High Level)
+
+1. Start Kafka locally (Docker)
+2. Run Kafka producer (`data_simulator/kafka_producer.py`)
+3. Execute Databricks notebooks in sequence:
+   - 00 → 01 → 02 → 03 → 04 → 05
+4. Query Gold tables and connect Power BI
+
+---
+
+## 🎤 Interview Pitch (Short Version)
+
+> “I built a near real-time streaming data platform using Kafka and Databricks with a Medallion Architecture.  
+> Bronze stores raw immutable data, Silver handles data quality and late data, and Gold is split into operational SCD Type 1 and regulatory SCD Type 2 layers.  
+> Power BI consumes these layers using DirectQuery and Import modes respectively, ensuring both performance and compliance.”
+
+---
+
+## 📈 Target Roles
+- Azure Data Engineer
+- Azure Data Architect
+- Streaming Data Engineer
+- BFSI Data Platform Engineer
+
+---
+
+## 📌 Disclaimer
+This project is created for **learning, hands-on practice, and interview preparation** and simulates enterprise-grade design patterns.
+
