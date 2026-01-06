@@ -32,3 +32,19 @@ The bank requires:
 
 ## 🧩 High-Level Architecture
 
+
+Producers (ATM / UPI / Cards)
+|
+v
+Kafka
+|
+v
+Databricks Structured Streaming
+|
+v
+ADLS Gen2 / Delta Lake
+(Bronze → Silver → Gold)
+|
+v
+Power BI
+
