@@ -67,3 +67,38 @@ Split into **two independent layers** to avoid performance and governance confli
 
 ## 📂 Repository Structure
 
+near-real-time-banking-streaming-platform/
+│
+├── README.md
+│
+├── architecture/
+│ └── near_real_time_streaming_architecture.png
+│
+├── notebooks/
+│ ├── 00_setup/
+│ │ └── 00_environment_setup.py
+│ │
+│ ├── 01_kafka/
+│ │ └── 01_kafka_event_schema.py
+│ │
+│ ├── 02_bronze/
+│ │ └── 02_kafka_to_bronze_streaming.py
+│ │
+│ ├── 03_silver/
+│ │ └── 03_bronze_to_silver_streaming.py
+│ │
+│ ├── 04_gold_rt/
+│ │ └── 04_silver_to_gold_rt_streaming.py
+│ │
+│ └── 05_gold_regulatory/
+│ └── 05_silver_to_gold_reg_scd2.py
+│
+├── data_simulator/
+│ └── kafka_producer.py
+│
+├── powerbi/
+│ └── dashboard_design.md
+│
+└── docs/
+├── interview_explanation.md
+└── assumptions_and_tradeoffs.md
