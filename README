@@ -1,0 +1,34 @@
+# Near Real-Time Banking Transaction Processing Platform
+
+## 📌 Overview
+This project demonstrates a **near real-time streaming data platform** built using **Kafka, Databricks Structured Streaming, Delta Lake (Medallion Architecture), and Power BI**.
+
+The solution is designed to support:
+- **Operational near real-time analytics**
+- **Regulatory & compliance reporting**
+- **Fault tolerance, scalability, and replayability**
+
+This project is intentionally designed to be:
+- Easy to explain in interviews
+- Realistic and aligned with BFSI production use cases
+- Suitable for hands-on practice using Databricks Community Edition
+
+---
+
+## 🏦 Business Use Case
+A retail bank receives high-volume transaction events from multiple channels such as:
+- ATM
+- UPI
+- Cards
+- NetBanking
+
+The bank requires:
+1. Near real-time visibility for operational teams  
+2. Historical, immutable data for regulatory and audit purposes  
+3. Ability to reprocess data if business rules change  
+4. Guaranteed data consistency and no data loss  
+
+---
+
+## 🧩 High-Level Architecture
+
