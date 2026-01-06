@@ -1,0 +1,69 @@
+
+---
+
+## 🏗️ Architecture Decisions (Interview-Focused)
+
+### Why Kafka?
+- Decouples producers and consumers
+- Handles traffic spikes via buffering
+- Provides ordered, durable event streams
+- Enables horizontal scalability using partitions
+
+### Why Databricks Structured Streaming?
+- Native Kafka integration
+- Exactly-once processing with Delta Lake
+- Built-in state management and watermarking
+
+### Why Delta Lake?
+- ACID transactions on data lakes
+- Time travel and auditability
+- Efficient MERGE support for SCD Type 2
+
+---
+
+## 🥉🥈🥇 Medallion Architecture
+
+### Bronze Layer (Raw)
+- Stores raw, immutable transaction events
+- Acts as the **system of record**
+- Enables replay without re-ingesting Kafka data
+
+### Silver Layer (Cleaned)
+- Applies data quality rules
+- Deduplicates transactions
+- Handles late-arriving data using watermarks
+- Produces trusted, analytics-ready data
+
+### Gold Layer (Consumption)
+Split into **two independent layers** to avoid performance and governance conflicts.
+
+---
+
+## 🥇 Gold Layer Strategy
+
+### 1️⃣ Gold RT – Operational (SCD Type 1)
+**Purpose:** Near real-time dashboards for operations
+
+- Latest state only
+- Aggregated metrics per account
+- Streaming-based
+- Optimized for low latency
+
+**Consumed by:** Power BI (DirectQuery)
+
+---
+
+### 2️⃣ Gold Regulatory – Compliance (SCD Type 2)
+**Purpose:** Audit, reconciliation, and regulatory reporting
+
+- Full historical records
+- Non-destructive updates
+- Batch / micro-batch processing
+- Long-term retention (7–10 years)
+
+**Consumed by:** Power BI (Import mode)
+
+---
+
+## 📂 Repository Structure
+
